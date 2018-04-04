@@ -1,0 +1,18 @@
+﻿@model SelectList
+
+@{
+    ViewBag.Title = "Import";
+    Layout = "_Layout";
+}
+
+<h2>@ViewData["message"]</h2>
+
+<h2>Import Data</h2>
+@using (Html.BeginForm("Import", "Import", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.DropDownList("importType", Model)
+    <input type="file" name="postedFile" />
+    <input type="submit" value="Import" />
+}
+
+

@@ -1,0 +1,30 @@
+﻿@model HedHome.Models.HedDataModel.CourseSkill
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CourseSkill</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Course)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Course.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Skill)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Skill.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>
