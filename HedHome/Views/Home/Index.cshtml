@@ -2,30 +2,20 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Country.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.EditorFor(model => model.Country.Name, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Country.Name, "", new { @class = "text-danger" })
-    </div>
-</div>
 
-@section Scripts {
-    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#Country_Name').autocomplete({
-                source: '/employee/getcountries',
-                select: function (event, ui) {
-                    //set tagids to save
-                    $("#CountryId").val(ui.item.id);
-               
-                    //Tags for display              
-                    this.value = ui.item.value;
-                    return false;
-                }
-            });
-        });
-    </script>
+<style>
+#div-search {
+	position: absolute;
+	width: 20em;
+	border: 1px solid;
+	padding: 10px;
+	box-shadow: 3px 3px #888888;
 }
+
+#wrap-search {
+	display: inline-block;
+}
+</style>
+<div id='mount'></div>
+<script type="text/javascript" src="./js/app.js"></script>
+
