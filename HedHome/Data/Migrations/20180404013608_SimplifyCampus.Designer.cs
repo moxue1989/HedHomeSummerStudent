@@ -11,9 +11,10 @@ using System;
 namespace HedHome.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180404013608_SimplifyCampus")]
+    partial class SimplifyCampus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,9 +77,13 @@ namespace HedHome.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("CityId");
+
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CityId");
 
                     b.ToTable("Campuses");
                 });
@@ -384,10 +389,17 @@ namespace HedHome.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("HedHome.Models.HedDataModel.Campus", b =>
+                {
+                    b.HasOne("HedHome.Models.HedDataModel.City")
+                        .WithMany("Campuses")
+                        .HasForeignKey("CityId");
+                });
+
             modelBuilder.Entity("HedHome.Models.HedDataModel.Course", b =>
                 {
                     b.HasOne("HedHome.Models.HedDataModel.Campus", "Campus")
-                        .WithMany()
+                        .WithMany("Courses")
                         .HasForeignKey("CampusId");
 
                     b.HasOne("HedHome.Models.HedDataModel.City", "City")
@@ -395,27 +407,27 @@ namespace HedHome.Data.Migrations
                         .HasForeignKey("CityId");
 
                     b.HasOne("HedHome.Models.HedDataModel.DeliveryType", "DeliveryType")
-                        .WithMany()
+                        .WithMany("Courses")
                         .HasForeignKey("DeliveryTypeId");
 
                     b.HasOne("HedHome.Models.HedDataModel.DurationType", "DurationType")
-                        .WithMany()
+                        .WithMany("Courses")
                         .HasForeignKey("DurationTypeId");
 
                     b.HasOne("HedHome.Models.HedDataModel.Faculty", "Faculty")
-                        .WithMany()
+                        .WithMany("Courses")
                         .HasForeignKey("FacultyId");
 
                     b.HasOne("HedHome.Models.HedDataModel.Institution", "Institution")
-                        .WithMany()
+                        .WithMany("Courses")
                         .HasForeignKey("InstitutionId");
 
                     b.HasOne("HedHome.Models.HedDataModel.StudyType", "StudyType")
-                        .WithMany()
+                        .WithMany("Courses")
                         .HasForeignKey("StudyTypeId");
 
                     b.HasOne("HedHome.Models.HedDataModel.SubjectType", "SubjectType")
-                        .WithMany()
+                        .WithMany("Courses")
                         .HasForeignKey("SubjectTypeId");
                 });
 

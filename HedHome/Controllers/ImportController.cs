@@ -63,6 +63,8 @@ namespace HedHome.Controllers
                     return await ImportInstitutions(postedFile);
                 case ImportType.Faculty:
                     return await ImportFaculties(postedFile);
+                case ImportType.Campus:
+                    return await ImportCampuses(postedFile);
                 default:
                     return RedirectToAction("Index");
             }
@@ -129,7 +131,14 @@ namespace HedHome.Controllers
             TempData["message"] = inserted + " skills were inserted";
             return RedirectToAction("Index");
         }
-
+        private async Task<IActionResult> ImportCampuses(IFormFile postedFile)
+        {
+            CsvImporter<Campus> importer = new CsvImporter<Campus>();
+            int inserted = await ImportRecords(postedFile, importer);
+            TempData["message"] = inserted + " campuses were inserted";
+            return RedirectToAction("Index");
+        }
+       
         private async Task<int> ImportRecords<T>(IFormFile postedFile, CsvImporter<T> importer) where T : class
         {
             using (var reader = new StreamReader(postedFile.OpenReadStream()))

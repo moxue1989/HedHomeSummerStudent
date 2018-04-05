@@ -9,7 +9,7 @@
         StudyType,
         DeliveryType,
         Institution,
-        Faculty
-
+        Faculty,
+        Campus
     }
 }
