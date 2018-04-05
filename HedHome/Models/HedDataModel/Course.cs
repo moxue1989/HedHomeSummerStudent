@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace HedHome.Models.HedDataModel
 {
@@ -23,8 +24,12 @@ namespace HedHome.Models.HedDataModel
         public Institution Institution { get; set; }
         public Faculty Faculty { get; set; }
         public Campus Campus { get; set; }
+        public City City { get; set; }
+        [JsonIgnore]
         public ICollection<Prerequisite> PrerequisitesOf { get; set; }
+        [JsonIgnore]
         public ICollection<Prerequisite> PrerequisitesFor { get; set; }
+        [JsonIgnore]
         public ICollection<CourseSkill> CourseSkills { get; set; }
     }
 
@@ -40,26 +45,22 @@ namespace HedHome.Models.HedDataModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<Course> Courses { get; set; }
     }
 
     public class DurationType
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<Course> Courses { get; set; }
     }
     public class StudyType
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<Course> Courses { get; set; }
     }
 
     public class DeliveryType
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<Course> Courses { get; set; }
     }
 }

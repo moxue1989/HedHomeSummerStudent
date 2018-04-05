@@ -9,6 +9,5 @@ namespace HedHome.Models.HedDataModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<Campus> Campuses { get; set; }
     }
 }
