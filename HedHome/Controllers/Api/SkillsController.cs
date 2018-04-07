@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HedHome.Cache;
 using Microsoft.AspNetCore.Http;
@@ -30,6 +31,9 @@ namespace HedHome.Controllers.Api
         {
             return _skillCache.GetAllSkills()
                 .Where(s => s.Name.ToLower().Contains(search.ToLower()))
+                .OrderByDescending(s => s.CourseSkills.Count)
+                .ThenBy(s => Regex.Match(s.Name.ToLower(), search).Index)
+                .ThenBy(s => s.Name.ToLower())
                 .Take(10);
         }
 

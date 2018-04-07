@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HedHome.Data;
 using HedHome.Models.HedDataModel;
+using Microsoft.EntityFrameworkCore;
 
 namespace HedHome.Cache
 {
@@ -22,14 +23,17 @@ namespace HedHome.Cache
         {
             if (_skillBag == null)
             {
-                _skillBag = new ConcurrentBag<Skill>(_dbContext.Skills.ToList());
+                _skillBag = new ConcurrentBag<Skill>(_dbContext.Skills
+                    .Include(s => s.CourseSkills)
+                    .ToList());
             }
             return _skillBag.ToList();
         }
 
         public void ReloadSKills()
         {
-            _skillBag = new ConcurrentBag<Skill>(_dbContext.Skills.ToList());
+            _skillBag = new ConcurrentBag<Skill>(_dbContext.Skills
+                .Include(s => s.CourseSkills).ToList());
         }
     }
 }

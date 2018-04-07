@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -31,6 +32,13 @@ namespace HedHome.Models.HedDataModel
         public ICollection<Prerequisite> PrerequisitesFor { get; set; }
         [JsonIgnore]
         public ICollection<CourseSkill> CourseSkills { get; set; }
+        [NotMapped]
+        public List<Skill> Skills
+        {
+            get { return CourseSkills.Select(c => c.Skill).ToList(); }
+        }
+
+
     }
 
     public class Prerequisite
