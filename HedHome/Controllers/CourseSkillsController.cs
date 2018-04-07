@@ -10,16 +10,16 @@ using HedHome.Models.HedDataModel;
 
 namespace HedHome.Controllers
 {
-    public class CoursesController : Controller
+    public class CourseSkillsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public CoursesController(ApplicationDbContext context)
+        public CourseSkillsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Courses
+        // GET: CoursesSkills
         public async Task<IActionResult> Index()
         {
             return View(await _context.Courses
@@ -27,9 +27,9 @@ namespace HedHome.Controllers
                 .ThenInclude(m => m.Skill)
                 .ToListAsync());
         }
-       
 
-        // GET: Courses/Edit/5
+
+        // GET: CoursesSkills/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -47,8 +47,8 @@ namespace HedHome.Controllers
             }
             return View(course);
         }
-        
-        // GET: Courses/Delete/5
+
+        // GET: CoursesSkills/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

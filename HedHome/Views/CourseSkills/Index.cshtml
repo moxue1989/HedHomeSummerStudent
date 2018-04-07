@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<HedHome.Models.HedDataModel.Course>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Course Skills";
 }
 
-<h2>Index</h2>
+<h2>Course Skills</h2>
 <table class="table">
     <thead>
         <tr>
@@ -34,12 +34,12 @@
                     @Html.DisplayFor(modelItem => item.CourseNumber)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Description)
+                    @Html.Raw(item.Description)
                 </td>
                 <td>
                     @foreach (var skill in item.Skills)
                     {
-                            @skill.Name<br/>
+                        @skill.Name<br />
                     }
                 </td>
                 <td>
@@ -49,3 +49,4 @@
         }
     </tbody>
 </table>
+

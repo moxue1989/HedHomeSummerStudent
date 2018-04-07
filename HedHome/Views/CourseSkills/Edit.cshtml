@@ -1,0 +1,29 @@
+﻿@model HedHome.Models.HedDataModel.Course
+
+@{
+    ViewData["Title"] = "Course Skills";
+}
+
+<h4>Edit Skills for: @Model.Title</h4>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-2">
+        <h6>Course Number:</h6> @Model.CourseNumber
+    </div>
+    <div class="col-md-4">
+        <h6>Course Description:</h6> @Html.Raw(Model.Description)
+
+    </div>
+    <div class="col-md-4">
+        <h6>Course Skills:</h6>
+        <div id="courseId" hidden="hidden">@Model.Id</div>
+        <div id='mount'></div>
+        <script type="text/javascript" src="/js/app.js"></script>
+    </div>
+</div>
+
+
