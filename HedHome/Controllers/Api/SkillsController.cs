@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HedHome.Data;
 using HedHome.Models.HedDataModel;
+using HedHome.Models.HedViewModels;
 
 namespace HedHome.Controllers.Api
 {
@@ -29,12 +30,19 @@ namespace HedHome.Controllers.Api
         [HttpGet]
         public IEnumerable<Skill> SearchSkills(string search)
         {
-            return _skillCache.GetAllSkills()
-                .Where(s => s.Name.ToLower().Contains(search.ToLower()))
-                .OrderByDescending(s => s.CourseSkills.Count)
-                .ThenBy(s => Regex.Match(s.Name.ToLower(), search).Index)
-                .ThenBy(s => s.Name.ToLower())
-                .Take(10);
+            return SearchSkillsByName(search);
+        }
+
+        // GET: api/Skills/Search
+        [HttpGet]
+        [Route("/api/Skills/Search")]
+        public IEnumerable<SkillView> SearchSkillsJquery(string term)
+        {
+            return SearchSkillsByName(term).Select(s => new SkillView
+            {
+                    label = s.Name,
+                    value = s.Id
+                });
         }
 
         // GET: api/Skills/5
@@ -54,6 +62,15 @@ namespace HedHome.Controllers.Api
             }
 
             return Ok(skill);
+        }
+        private IEnumerable<Skill> SearchSkillsByName(string search)
+        {
+            return _skillCache.GetAllSkills()
+                .Where(s => s.Name.ToLower().Contains(search.ToLower()))
+                .OrderByDescending(s => s.CourseSkills.Count)
+                .ThenBy(s => Regex.Match(s.Name.ToLower(), search).Index)
+                .ThenBy(s => s.Name.ToLower())
+                .Take(10);
         }
     }
 }
