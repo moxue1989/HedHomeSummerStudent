@@ -1,36 +1,58 @@
 ﻿@model IEnumerable<HedHome.Models.HedDataModel.Course>
 
-@{
+    @{
     ViewData["Title"] = "Course Skills";
-}
+    }
 
-<h2>Course Skills</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CourseNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Skills)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+    <h2>Course Skills</h2>
+    <table class="table">
+        <thead>
             <tr>
-                <td>
+                <th>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="text"
+                                           placeholder="@Html.DisplayNameFor(model => model.Title)"
+                                           id="searchTitle"
+                                           class="input-search" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </th>
+                <th>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="text"
+                                           placeholder="@Html.DisplayNameFor(model => model.CourseNumber)"
+                                           id="searchCourseNumber"
+                                           class="input-search" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Skills)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr id="@Html.DisplayFor(modelItem=> item.Id)" class="tr-course">
+                <td id="td-title-@Html.DisplayFor(modelItem=> item.Id)">
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
-                <td>
+                <td id="td-course-number-@Html.DisplayFor(modelItem=> item.Id)">
                     @Html.DisplayFor(modelItem => item.CourseNumber)
                 </td>
                 <td>
@@ -39,14 +61,40 @@
                 <td>
                     @foreach (var skill in item.Skills)
                     {
-                        @skill.Name<br />
+                    @skill.Name<br />
                     }
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit Skills</a> |
                 </td>
             </tr>
-        }
-    </tbody>
-</table>
+            }
+        </tbody>
+    </table>
 
+    @section scripts {
+    <script type="text/javascript">
+        (function () {
+            $('#searchTitle').keyup(function (e) {
+                var input = e.target.value;
+                $('.tr-course').each(function (i, tr) {
+                    tr.style.display = "none";
+                    var val = $('#td-title-' + tr.getAttribute('id')).text();
+                    if (val.toLowerCase().indexOf(input.toLowerCase()) !== -1) {
+                        tr.style.display = "table-row";
+                    }
+                })
+            })
+            $('#searchCourseNumber').keyup(function (e) {
+                var input = e.target.value;
+                $('.tr-course').each(function (i, tr) {
+                    tr.style.display = "none";
+                    var val = $('#td-course-number-' + tr.getAttribute('id')).text();
+                    if (val.toLowerCase().indexOf(input.toLowerCase()) !== -1) {
+                        tr.style.display = "table-row";
+                    }
+                })
+            })
+        })();
+    </script>
+    }
