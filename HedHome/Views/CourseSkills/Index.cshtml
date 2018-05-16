@@ -1,6 +1,4 @@
-﻿@model PagedList.IPagedList<HedHome.Models.HedDataModel.Course>
-@using PagedList.Mvc;
-
+﻿@model IEnumerable<HedHome.Models.HedDataModel.Course>
 
 @{
     ViewData["Title"] = "Course Skills";
@@ -8,14 +6,21 @@
 <a id='atop'></a>
 <div id='anchortop'>
     <a href="#atop">
-        <img src='images/uparrow.png'
-             style='width: 50px; height: auto;' />
     </a>
 </div>
 <h2>Your course skills</h2>
-<table class="table">
+<label for="select-perPage">Results per page:</label>
+<select id="select-perPage">
+    <option value="20">20</option>
+    <option value="50">50</option>
+    <option value="100">100</option>
+    <option value="200">200</option>
+    <option value="500">500</option>
+</select>
+<table id="courseTable" class="table">
     <thead>
         <tr>
+            <th></th>
             <th>
                 <table>
                     <tbody>
@@ -54,9 +59,11 @@
         </tr>
     </thead>
     <tbody>
+        @{ var i = 0;}
         @foreach (var item in Model)
         {
-            <tr id="@Html.DisplayFor(modelItem=> item.Id)" class="tr-course">
+            <tr id="@Html.DisplayFor(modelItem => item.Id)" row-id="@(i++)" class="tr-course" style="display: none;">
+                <td>@i</td>
                 <td id="td-title-@Html.DisplayFor(modelItem=> item.Id)">
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
@@ -73,7 +80,7 @@
                     }
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit Skills</a> |
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit Skills</a>
                 </td>
             </tr>
         }
@@ -92,6 +99,7 @@
     <script type="text/javascript">
         (function () {
             $('#searchTitle').keyup(function (e) {
+                $('#paginationdiv').hide();
                 var input = e.target.value;
                 $('.tr-course').each(function (i, tr) {
                     tr.style.display = "none";
@@ -100,8 +108,13 @@
                         tr.style.display = "table-row";
                     }
                 })
+                if (input === "") {
+                    paginate(1);
+                    $('#paginationdiv').show();
+                }
             })
             $('#searchCourseNumber').keyup(function (e) {
+                $('#paginationdiv').hide();
                 var input = e.target.value;
                 $('.tr-course').each(function (i, tr) {
                     tr.style.display = "none";
@@ -110,13 +123,21 @@
                         tr.style.display = "table-row";
                     }
                 })
+                if (input === "") {
+                    paginate(1);
+                    $('#paginationdiv').show();
+                }
             })
             @{
-        var currentPage = ViewData["currentPage"];
-        var totalCount = ViewData["totalCount"];
+                var currentPage = ViewData["currentPage"];
+                var perPage = ViewData["perPage"];
+                var totalCount = Model.Count();
                 }
-
-            paginate(@totalCount,@currentPage);
+            $('#select-perPage').val(@perPage);
+            $('#select-perPage').change(function () {
+                paginate(1, $(this).val());
+            })
+            paginate(@currentPage,@perPage,@totalCount);
         })();
     </script>
 }
