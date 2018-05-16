@@ -7,25 +7,40 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HedHome.Data;
 using HedHome.Models.HedDataModel;
+using PagedList;
 
 namespace HedHome.Controllers
 {
     public class CourseSkillsController : Controller
     {
+        private static int? _totalCount;
         private readonly ApplicationDbContext _context;
 
         public CourseSkillsController(ApplicationDbContext context)
         {
             _context = context;
+            if (_totalCount == null)
+            {
+                _totalCount = _context.Courses
+                .Count();
+            }
+
         }
 
         // GET: CoursesSkills
-        public async Task<IActionResult> Index()
+        public IActionResult Index(int? page)
         {
-            return View(await _context.Courses
+            ViewData["active"] = "CourseSkills";
+            ViewData["totalCount"] = _totalCount;
+            ViewData["currentPage"] = page.HasValue ? page : 1;
+            int pageSize = 5;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            IPagedList<Course> courses = _context.Courses
                 .Include(m => m.CourseSkills)
                 .ThenInclude(m => m.Skill)
-                .ToListAsync());
+                .ToPagedList(pageIndex, pageSize);
+            return View(courses);
         }
 
 

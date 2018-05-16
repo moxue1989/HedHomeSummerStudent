@@ -14,7 +14,8 @@ namespace HedHome.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "CourseSkills");
+
         }
 
         public IActionResult Error()

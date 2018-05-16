@@ -1,53 +1,61 @@
-﻿@model IEnumerable<HedHome.Models.HedDataModel.Course>
+﻿@model PagedList.IPagedList<HedHome.Models.HedDataModel.Course>
+@using PagedList.Mvc;
 
-    @{
+
+@{
     ViewData["Title"] = "Course Skills";
-    }
-
-    <h2>Course Skills</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <input type="text"
-                                           placeholder="@Html.DisplayNameFor(model => model.Title)"
-                                           id="searchTitle"
-                                           class="input-search" />
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </th>
-                <th>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <input type="text"
-                                           placeholder="@Html.DisplayNameFor(model => model.CourseNumber)"
-                                           id="searchCourseNumber"
-                                           class="input-search" />
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Skills)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+}
+<a id='atop'></a>
+<div id='anchortop'>
+    <a href="#atop">
+        <img src='images/uparrow.png'
+             style='width: 50px; height: auto;' />
+    </a>
+</div>
+<h2>Your course skills</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input type="text"
+                                       placeholder="Title"
+                                       id="searchTitle"
+                                       class="input-search" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </th>
+            <th>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input type="text"
+                                       placeholder="Course Number"
+                                       id="searchCourseNumber"
+                                       class="input-search" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Skills
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
             <tr id="@Html.DisplayFor(modelItem=> item.Id)" class="tr-course">
                 <td id="td-title-@Html.DisplayFor(modelItem=> item.Id)">
                     @Html.DisplayFor(modelItem => item.Title)
@@ -61,18 +69,26 @@
                 <td>
                     @foreach (var skill in item.Skills)
                     {
-                    @skill.Name<br />
+                        @skill.Name<br />
                     }
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit Skills</a> |
                 </td>
             </tr>
-            }
-        </tbody>
-    </table>
-
-    @section scripts {
+        }
+    </tbody>
+</table>
+<div id="paginationdiv">
+    <div id="paginationdivinner">
+        <ul class="pagination" id="paginationul" style="margin: 0;">
+            <li><a href="#">&laquo;</a></li>
+            <li class="active"><a href="#top">1 </a></li>
+            <li><a href="#"><span>&raquo;</span></a></li>
+        </ul>
+    </div>
+</div>
+@section scripts {
     <script type="text/javascript">
         (function () {
             $('#searchTitle').keyup(function (e) {
@@ -95,6 +111,12 @@
                     }
                 })
             })
+            @{
+        var currentPage = ViewData["currentPage"];
+        var totalCount = ViewData["totalCount"];
+                }
+
+            paginate(@totalCount,@currentPage);
         })();
     </script>
-    }
+}
