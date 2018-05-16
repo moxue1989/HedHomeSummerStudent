@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using HedHome.Data;
 using HedHome.Models;
 using HedHome.Services;
+using Microsoft.AspNetCore.Rewrite;
 
 namespace HedHome
 {
@@ -55,6 +56,8 @@ namespace HedHome
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseRewriter(new RewriteOptions().AddRedirectToHttpsPermanent());
 
             app.UseStaticFiles();
 
