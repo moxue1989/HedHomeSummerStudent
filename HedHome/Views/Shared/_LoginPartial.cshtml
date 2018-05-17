@@ -4,27 +4,48 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-@if (SignInManager.IsSignedIn(User))
-{
-    <ul class="nav navbar-nav">
-        <li><a asp-area="" asp-controller="CourseSkills" asp-action="Index">Course Skill Mappings</a></li>
-        <li><a asp-area="" asp-controller="Import" asp-action="Index">Import</a></li>
+<div class="navbar-collapse collapse dual-collapse2" id="divNavBar">
+    <ul class="navbar-nav">
+        <li class="nav-item @if(ViewData["active"].Equals("Careers")){@Html.Raw("active")}">
+            <a asp-area="" asp-controller="Home" asp-action="Careers" class="nav-link">Careers</a>
+        </li>
+        <li class="nav-item @if(ViewData["active"].Equals("FindCourses")){@Html.Raw("active")}">
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">Find Courses</a>
+        </li>
+        <li class="nav-item @if(ViewData["active"].Equals("RateCourses")){@Html.Raw("active")}">
+            <a asp-area="" asp-controller="Home" asp-action="RateCourses" class="nav-link">Rate Courses</a>
+        </li>
     </ul>
-    <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+    @if (SignInManager.IsSignedIn(User))
+    {
+
+        <ul class="nav navbar-nav ml-auto justify-content-end">
+            <li class="nav-item">
+                <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage" class="nav-link">Hello @UserManager.GetUserName(User)!</a>
             </li>
-            <li>
-                <button type="submit" class="btn btn-link navbar-btn navbar-link">Log out</button>
+            <li class="nav-item">
+                <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm">
+                    <button type="submit" class="nav-link btn btn-link">Log out</button>
+                </form>
             </li>
         </ul>
-    </form>
-}
-else
-{
-    <ul class="nav navbar-nav navbar-right">
-        <li><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>
-        <li><a asp-area="" asp-controller="Account" asp-action="Login">Log in</a></li>
-    </ul>
-}
+
+    }
+    else
+    {
+        <ul class="nav navbar-nav ml-auto justify-content-end">
+            <li class="nav-item">
+                <a asp-area="" asp-controller="Account" asp-action="Register" class="nav-link">Educators / Post Courses</a>
+            </li>
+            <li class="nav-item nav-link">
+                |
+            </li>
+            <li class="nav-item">
+                <a asp-area="" asp-controller="Account" asp-action="Register" class="nav-link">Build a plan</a>
+            </li>
+            <li class="nav-item">
+                <a asp-area="" asp-controller="Account" asp-action="Login" class="nav-item nav-link">Log in</a>
+            </li>
+        </ul>
+    }
+</div>

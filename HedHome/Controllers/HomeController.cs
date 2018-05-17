@@ -9,18 +9,32 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace HedHome.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
         public IActionResult Index()
         {
-            return RedirectToAction("Index", "CourseSkills");
-
+            return RedirectToAction("FindCourses");
         }
 
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult FindCourses()
+        {
+            ViewData["active"] = "FindCourses";
+            return View();
+        }
+        public IActionResult RateCourses()
+        {
+            ViewData["active"] = "RateCourses";
+            return View();
+        }
+        public IActionResult Careers()
+        {
+            ViewData["active"] = "Careers";
+            return View();
         }
     }
 }

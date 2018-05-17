@@ -1,9 +1,4 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
-}
-
-/* Wrapping element */
+﻿/* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -37,14 +32,13 @@
     border:none;
     font-size:1.5rem;
 }
-nav img {
-    padding-top: 15px;
-    height: 3rem;
-}
 #paginationdiv {
     text-align: center;
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
+}
+nav{
+    border-bottom:2px solid;
 }
