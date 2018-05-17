@@ -9,6 +9,10 @@ namespace HedHome.Models.AccountViewModels
     public class RegisterViewModel
     {
         [Required]
+        [Display(Name = "Registration Type")]
+        public String RegistrationType { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }

@@ -14,7 +14,7 @@ namespace HedHome.Controllers
     {
         public IActionResult Index()
         {
-            return RedirectToAction("Index", "CourseSkills");
+            return RedirectToAction("Index", "Account");
 
         }
 

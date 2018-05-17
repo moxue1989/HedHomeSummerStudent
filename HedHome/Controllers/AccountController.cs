@@ -42,12 +42,12 @@ namespace HedHome.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(string returnUrl = null)
+        public async Task<IActionResult> Login(string returnUrl = "Index")
         {
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            ViewData["ReturnUrl"] = returnUrl;
+            ViewData["ReturnUrl"] = "test";
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace HedHome.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index","CourseSkills");
                 }
                 if (result.RequiresTwoFactor)
                 {
